@@ -47,4 +47,3 @@ schema = StructType([
   StructField("road_ramp",StringType()),
   StructField("bridge_highway_segment",StringType())
 ])
-df = spark.createDataFrame([], schema)
