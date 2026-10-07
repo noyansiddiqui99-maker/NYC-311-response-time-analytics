@@ -48,5 +48,6 @@ silver_schema = StructType([
   StructField("road_ramp", StringType()),
   StructField("bridge_highway_segment", StringType()),
   StructField("load_timestamp", TimestampType()),
-  StructField("source_file", StringType())
+  StructField("source_file", StringType()),
+  StructField("batch_id", StringType())
 ])
