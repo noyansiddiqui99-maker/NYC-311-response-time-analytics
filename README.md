@@ -14,3 +14,11 @@ page_7	Loads only that file — use this to repair or backfill one batch
 Idempotency. Each batch is written with replaceWhere batch_id = '<batch>', so re-running replaces only that batch's rows and leaves the others untouched. Running the notebook twice gives exactly the same table as running it once.
 
 Bronze keeps everything. Duplicate unique_key values are not removed here. If the same service request appears in three files, Bronze stores all three versions, because Bronze is the record of what actually arrived. Silver picks the most recent version.
+
+Bronze data dictionary
+
+print("| Column | Type | Nullable | Key | Description |")
+print("|---|---|---|---|---|")
+for r in dictionary.collect():
+    print(f"| {r.column_name} | {r.data_type} | {r.nullable} | "
+          f"{r.key} | {r.description} |")
