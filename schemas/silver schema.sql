@@ -1,4 +1,4 @@
-
+from pyspark.sql.types import StructType, StructField, StringType, TimestampType
 silver_schema = StructType([
   StructField("unique_key",                     StringType(),    False),
   StructField("created_date",                   TimestampType(), True),
