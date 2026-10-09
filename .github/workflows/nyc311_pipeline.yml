@@ -1,3 +1,4 @@
+
 name: NYC 311 API Ingestion
 
 on:
@@ -20,8 +21,10 @@ jobs:
         run: pip install requests
 
       - name: Run NYC 311 API ingestion
+        working-directory: ${{ github.workspace }}
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
+          ls -la
           python api_call.py --load incremental --days 2 --max-rows 50000
