@@ -6,7 +6,6 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
-#Api ingestion call
 
 NYC311_URL = "https://data.cityofnewyork.us/resource/erm2-nwe9.json"
 
@@ -213,19 +212,3 @@ if __name__ == "__main__":
         )
 
 
-aur silver main hi one row per request wala cell:with run_guard():
-    # rows quarantined in step 8 must not reach Silver
-    bad_keys = (bad_cast.select("unique_key", col("bronze_batch_id").alias("batch_id"))
-                        .distinct())
-
-    newest = Window.partitionBy("unique_key").orderBy(
-        col("record_version").desc_nulls_last())
-
-    silver_df = (typed
-        .filter(col("unique_key").isNotNull())
-        .join(bad_keys, ["unique_key", "batch_id"], "left_anti")
-        .withColumn("_rn", row_number().over(newest))
-        .filter(col("_rn") == 1).drop("_rn")
-        .select([col(f.name).cast(f.dataType) for f in silver_schema.fields]))
-
-    print("rows after dedup:", silver_df.count())
