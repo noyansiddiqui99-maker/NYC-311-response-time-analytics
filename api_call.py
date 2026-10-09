@@ -18,13 +18,9 @@ HEADERS = {
 }
 
 
-def upload_to_databricks(local_file, volume_file):
 
-    url = (
-        f"{DATABRICKS_HOST}"
-        f"/api/2.0/fs/files"
-        f"{volume_file}"
-    )
+def upload_to_databricks(local_file, volume_file):
+    url = f"{DATABRICKS_HOST}/api/2.0/fs/files{volume_file}?overwrite=true"
 
     headers = {
         "Authorization": f"Bearer {DATABRICKS_TOKEN}",
@@ -32,7 +28,6 @@ def upload_to_databricks(local_file, volume_file):
     }
 
     with open(local_file, "rb") as f:
-
         r = requests.put(
             url,
             headers=headers,
@@ -40,7 +35,11 @@ def upload_to_databricks(local_file, volume_file):
             timeout=120
         )
 
-    r.raise_for_status()
+    if r.status_code not in [200, 201, 204]:
+        print("Upload URL:", url)
+        print("Status:", r.status_code)
+        print("Response:", r.text)
+        r.raise_for_status()
 
     print(f"Uploaded to Databricks: {volume_file}")
 
