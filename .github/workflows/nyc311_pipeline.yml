@@ -26,6 +26,5 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          run: |
-            ls -la
-            python api_call.py --load incremental --days 2 --max-rows 50000
+          ls -la
+          python api_call.py --load incremental --days 2 --max-rows 50000
