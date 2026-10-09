@@ -1,8 +1,9 @@
-
 name: NYC 311 API Ingestion
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 21 * * *"
 
 jobs:
   api_ingestion:
